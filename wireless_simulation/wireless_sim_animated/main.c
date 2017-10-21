@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
-#include <graphics.h>
-#include <X11/Xlib.h>
+#include <ncurses.h>
 #include "proj3hdr.h"
 
 void initialize_values(){
@@ -25,15 +24,36 @@ void initialize_values(){
   //the messages we could send
 }
 
+///NEEDS CHANGING
 void initialize_display(){
-  int gd = DETECT, gm;
-  initgraph(&gd,&gm,NULL);
+
+  initscr();
+  cbreak();
+  curs_set(0);
+  keypad(stdscr, TRUE);
+  noecho();
+
+  start_color();
+
+  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(4, COLOR_BLUE, COLOR_BLACK);
+  init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+  init_pair(6, COLOR_CYAN, COLOR_BLACK);
+  init_pair(6, COLOR_CYAN, COLOR_BLACK);
+  init_pair(7, COLOR_WHITE, COLOR_BLACK);
+
+
+
   //initwindow(600, 600);
-  for (int i = 50; i <= 600; i += 30){
-    for (int j = 50; j <= 450; j+= 30){
-      circle(i, j, 8);
+  for (int i = 0; i < 200; i += 2){
+    for (int j = 0; j < 100; j+= 1){
+      mvaddch(j, i, 'O');
     }
   }
+  //printw("The terminal can print %d colors\n", COLORS);
+  refresh();
 }
 
 //a cool stub to see how a single network runs in our system
@@ -56,18 +76,6 @@ void test_add_nodes(){
   add_node(ELEVEN, 11, 5, LEGITIMATE);
   add_node(ELEVEN, 10, 11, NOISEMAKER);
   */
-  //*** THIS NEEDS TO BE TRANSPLANTED WITHIN A FUNCTION***//
-  Node* node_ptr;
-  for (int i = 0; i < 100; i++){
-    for (int j = 0; j < 100; j++){
-      if (field[i][j] != NULL){
-        node_ptr = field[i][j];
-        node_ptr->visit_list = initialize_visit_list(node_ptr);
-      }
-    }
-  }
-
-  initialize_threads();
 }
 
 void print_nodes_in_queue(NodeQueue* queue){
@@ -130,14 +138,12 @@ void test_add_rand_nodes(){
 }
 
 int main(){
-  printf("Welcome to Project 3B! We are running the main file...\n");
-  XInitThreads();
-  initialize_display();
   initialize_values();
-  delay(1000);
   test_add_nodes();
   //test_add_rand_nodes();
-  //let the threads do their thing.
-  delay(10000);
-  //while(1){};
+  initialize_structs();
+  initialize_display();
+  initialize_threads();
+
+  while(1){};
 }

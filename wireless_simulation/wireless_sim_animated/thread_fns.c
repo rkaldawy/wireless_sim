@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/time.h>
-#include <graphics.h>
+#include <ncurses.h>
 #include "proj3hdr.h"
 
 //puts a shield on all our neighbors so that we can test them
@@ -178,24 +178,26 @@ void display_messages(Node* me){
 
   pthread_mutex_lock(&draw_lock);
   for (int i = 0; i < me->nbr_size; i++){
-    setcolor(me->color);
-    circle(50 + 30 * me->nbrs[i]->x_pos, 50 + 30 * me->nbrs[i]->y_pos, 8);
+    attron(COLOR_PAIR(me->color));
+    mvaddch(me->nbrs[i]->y_pos, 2 * me->nbrs[i]->x_pos, 'O');
+    refresh();
   }
-  setcolor(me->color);
-  fillellipse(50 + 30 * me->x_pos, 50 + 30 * me->y_pos, 8, 8);
+  attron(COLOR_PAIR(me->color));
+  mvaddch(me->y_pos, 2 * me->x_pos, 'O');
+  refresh();
   //setcolor(WHITE);
   pthread_mutex_unlock(&draw_lock);
   unsigned int retTime = time(0) + 1;   // Imagine a message is being sent.
   while (time(0) < retTime);
   pthread_mutex_lock(&draw_lock);
   for (int i = 0; i < me->nbr_size; i++){
-    setcolor(WHITE);
-    circle(50 + 30 * me->nbrs[i]->x_pos, 50 + 30 * me->nbrs[i]->y_pos, 8);
+    attron(COLOR_PAIR(7));
+    mvaddch(me->nbrs[i]->y_pos, 2 * me->nbrs[i]->x_pos, 'O');
+    refresh();
   }
-  setcolor(BLACK);
-  fillellipse(50 + 30 * me->x_pos, 50 + 30 * me->y_pos, 8, 8);
-  setcolor(WHITE);
-  circle(50 + 30 * me->x_pos, 50 + 30 * me->y_pos, 8);
+  attron(COLOR_PAIR(7));
+  mvaddch(me->y_pos, 2 * me->x_pos, 'O');
+  refresh();
   pthread_mutex_unlock(&draw_lock);
 
 }

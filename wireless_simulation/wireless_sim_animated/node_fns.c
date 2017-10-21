@@ -8,13 +8,25 @@ void initialize_nodes(){
   initialize_field();
 }
 
+void initialize_structs(){
+  Node* node_ptr;
+  for (int i = 0; i < 100; i++){
+    for (int j = 0; j < 100; j++){
+      if (field[i][j] != NULL){
+        node_ptr = field[i][j];
+        node_ptr->visit_list = initialize_visit_list(node_ptr);
+      }
+    }
+  }
+}
+
 //this function starts a thread for each node
 void initialize_threads(){
   for (int i = 0; i < 100; i++){
     for (int j = 0; j < 100; j++){
       if (field[i][j] != NULL){
         Node* me = field[i][j]; //set up a node in the position of the array
-        printf("Hey now, we found a node at (%d, %d)!\n", me->x_pos, me->y_pos);
+        //printf("Hey now, we found a node at (%d, %d)!\n", me->x_pos, me->y_pos);
         //pthread_t p;
         pthread_create(&me->thread, NULL, node_thread, me); //start up its thread
         //pthread_create(&p, NULL, test_thread, NULL);
@@ -85,7 +97,7 @@ void add_node(int frequency, int x_pos, int y_pos, int type){
   node_ptr->nbr_size = 0;
   node_ptr->nsmkr_nbr_size = 0;
   node_ptr->waiting_nodes = initialize_node_queue();
-  node_ptr->color = (rand()%14) + 1;
+  node_ptr->color = (rand()%6) + 1;
   /*
   node_ptr->id = CURRENT_NUM; //each node has a unique "id"
   CURRENT_NUM++;

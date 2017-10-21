@@ -125,6 +125,7 @@ int block_probability; //out of 100
 void add_node(int frequency, int x_pos, int y_pos, int type);
 void find_neighbors(Node* node_ptr, int x_pos, int y_pos);
 void initialize_field();
+void initialize_structs();
 void initialize_threads();
 void add_rand_nodes();
 
