@@ -151,4 +151,12 @@ int add_rebroadcast(MessageList *messages, FILE *file, int new_id, int sender_id
 int add_transmit(MessageList *messages, FILE *file, int node_id, time_t time_get, int x_pos, int y_pos);
 struct Message *retrieve(struct MessageList *messages);
 
+//TEST FUNCTIONS
+void test_add_nodes();
+void print_nodes_in_queue(NodeQueue* queue);
+void test_node_queue();
+void test_add_rand_nodes();
+
+
+
 #endif

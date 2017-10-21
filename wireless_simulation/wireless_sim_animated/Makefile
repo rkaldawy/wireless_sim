@@ -1,7 +1,7 @@
 all: wireless_sim
 
-wireless_sim: main.o rand_fns.o node_fns.o thread_fns.o message_fns.o
-	gcc -pthread main.o rand_fns.o node_fns.o thread_fns.o message_fns.o -o wireless_sim -lncurses
+wireless_sim: main.o rand_fns.o node_fns.o thread_fns.o message_fns.o test_fns.o
+	gcc -pthread main.o rand_fns.o node_fns.o thread_fns.o message_fns.o test_fns.o -o wireless_sim -lncurses
 
 main.o: main.c proj3hdr.h
 	gcc -g -c main.c
@@ -17,6 +17,9 @@ thread_fns.o: thread_fns.c proj3hdr.h
 
 message_fns.o: message_fns.c proj3hdr.h
 	gcc -g -c message_fns.c
+
+test_fns.o: test_fns.c proj3hdr.h
+	gcc -g -c test_fns.c
 
 clean:
 	rm -f *.o *.txt wireless_sim
