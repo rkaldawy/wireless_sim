@@ -87,6 +87,12 @@ void find_neighbors(Node* node_ptr, int x_pos, int y_pos){
 //this initializes all the data for a node
 void add_node(int frequency, int x_pos, int y_pos, int type){
   Node* node_ptr = (Node*) malloc(sizeof(Node)); //reserve it memory
+
+  if(node_ptr == NULL){
+    printf("Malloc failled on the new node. Exiting the program.\n");
+    exit(0);
+  }
+
   node_ptr->channel = frequency;
   node_ptr->x_pos = x_pos;
   node_ptr->y_pos = y_pos;

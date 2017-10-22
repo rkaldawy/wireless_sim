@@ -9,7 +9,7 @@ void initialize_values(){
   //set the randomizer
   srand(time(NULL));
   //please set your values here
-  num_nodes = 100;
+  num_nodes = 500;
   num_noisemakers = 50;
   dwell_duration = 100;
   dwell_probability = 0;
@@ -53,8 +53,9 @@ void initialize_display(){
 
 int main(){
   initialize_values();
-  test_add_nodes();
-  //test_add_rand_nodes();
+  //test_fill_nodes();
+  //test_add_nodes();
+  test_add_rand_nodes();
   initialize_structs();
   initialize_display();
   initialize_threads();

@@ -83,5 +83,13 @@ void test_node_queue(){
 //to be used when n nodes and noisemakers are desired randmly
 void test_add_rand_nodes(){
   add_rand_nodes();
-  initialize_threads();
+  //initialize_threads();
+}
+
+void test_fill_nodes(){
+  for(int i = 1; i < 13; i++){
+    for(int j = 1; j < 13; j++){
+      add_node(ONE, i, j, LEGITIMATE);
+    }
+  }
 }

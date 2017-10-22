@@ -23,6 +23,12 @@ void add_rand_nodes(){
     x_pos = rand() % 100;
     y_pos = rand() % 100;
     if (field[x_pos][y_pos] == NULL){ //place each node in an unoccupied array space
+
+      type = LEGITIMATE;
+      frequency = ONE;
+      remaining_nodes--;
+      total_nodes--;
+      /*
       type_pick = rand() % total_nodes + 1;
       if(remaining_nodes-type_pick >= 0){
         type = LEGITIMATE; //adds a real node
@@ -34,6 +40,7 @@ void add_rand_nodes(){
       }
       total_nodes--;
       frequency = rand() % 3; //pick a ranoom frequency to start
+      */
       add_node(frequency, x_pos, y_pos, type);
       printf("A new node of type %d was added at the position (%d, %d).\n", type, x_pos, y_pos);
     }

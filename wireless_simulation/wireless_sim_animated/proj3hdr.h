@@ -156,6 +156,7 @@ void test_add_nodes();
 void print_nodes_in_queue(NodeQueue* queue);
 void test_node_queue();
 void test_add_rand_nodes();
+void test_fill_nodes();
 
 
 
