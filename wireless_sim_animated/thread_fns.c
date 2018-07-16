@@ -46,11 +46,10 @@ int wake_from_node(Node* queuer){
   int empty;
   do{
     empty = clear_first_node_queue(queue);
-    ////printf("The queue at (%d, %d) has %d elements letf\n", queuer->x_pos, queuer->y_pos, empty);
+    ////printf("The queue at (%d, %d) has %d elements left\n", queuer->x_pos, queuer->y_pos, empty);
   }
   while (empty);
 }
-
 
 int build_shields(Node* me){
   Node* neighbor;
@@ -135,9 +134,9 @@ int build_shields(Node* me){
       return 0;
     }
     else {
-        //printf("We are adding a shield to (%d, %d).\n", neighbor->x_pos, neighbor->y_pos);
-        neighbor->shield = 1;
-      }
+     //printf("We are adding a shield to (%d, %d).\n", neighbor->x_pos, neighbor->y_pos);
+     neighbor->shield = 1;
+    }
     pthread_mutex_unlock(&neighbor->shield_lock);
     }
 

@@ -24,6 +24,8 @@
 #define ON 1
 #define OFF 0
 
+#define DEBUG_LOGGING
+
 //add a "broadcasting" condition variable
 
 typedef struct Node Node;
@@ -104,7 +106,36 @@ struct Node {
   pthread_cond_t cond; //we only need one per node to talk to the other nodes
 
   //Messages* message_list;
+  #ifdef DEBUG_LOGGING
+  FILE* debug_log;
+  #endif
 };
+
+//TODO: add timing
+#ifdef DEBUG_LOGGING
+#define LOG_MUTEX_LOCK(action, node){                             \
+        action;                                                   \
+        fprintf(node->debug_log,                                  \
+                "A lock occured at line number %d in line %s.\n", \
+                __LINE__, __FILE__);
+#define LOG_MUTEX_UNLOCK(action, node){                              \
+        action;                                                      \
+        fprintf(node->debug_log,                                     \
+                "An unlock occured at line number %d in line %s.\n", \
+                __LINE__, __FILE__);
+#define LOG_COND_WAIT(action, node){                                        \
+        action;                                                             \
+        fprintf(node->debug_log,                                            \
+                "A condition wait occured at line number %d in line %s.\n", \
+                __LINE__, __FILE__);
+#else
+#define LOG_MUTEX_LOCK(action, node){ \
+        action;
+#define LOG_MUTEX_UNLOCK(action, node){ \
+        action;
+#define LOG_COND_WAIT(action, node){ \
+        action;
+#endif
 
 Node* field [100][100];
 int CURRENT_NUM;
