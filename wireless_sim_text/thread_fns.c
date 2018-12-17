@@ -57,7 +57,10 @@ int build_shields(Node* me){
   printf("The node at (%d, %d) is trying to set up its shields!\n", me->x_pos, me->y_pos);
   printf(" The node at (%d, %d) has the current shield value: %d \n", me->x_pos, me->y_pos, me->shield);
   for (int i = 0; i < me->nbr_size; i++){
-    printf("    The neighbor at (%d, %d) has this current shield value: %d and the current channel value: %d\n", me->nbrs[i]->x_pos, me->nbrs[i]->y_pos, me->nbrs[i]->shield,  me->nbrs[i]->channel);
+    printf("    The neighbor at (%d, %d) has this current shield value: %d and the current channel value: %d\n", me->nbrs[i]->x_pos,
+                                                                                                                 me->nbrs[i]->y_pos,
+                                                                                                                 me->nbrs[i]->shield,
+                                                                                                                 me->nbrs[i]->channel);
   }
   //Put the shield on myself, so no other node can access me while I'm putting shields on my neighbors
   pthread_mutex_lock(&me->shield_lock);
@@ -78,8 +81,10 @@ int build_shields(Node* me){
   for (int i = 0; i < me->nbr_size; i++){
     neighbor = me->nbrs[i];
 
+    printf("BING\n");
     //THE PROBLEM IS THIS LOCK
     pthread_mutex_lock(&neighbor->shield_lock);
+    printf("BONG\n");
 
     //if someone else has aleady shielded this node:
     if (neighbor->visit_list[find_position_in_array(me, neighbor)].visited == 1){
@@ -89,12 +94,14 @@ int build_shields(Node* me){
 
       for(int j = i-1; j >= 0; j--){
         past_neighbor = me->nbrs[j];
+        printf("testestest\n");
         pthread_mutex_lock(&past_neighbor->shield_lock);
         past_neighbor->shield = 0;
         printf("We are waking a past neighbor\n");
         wake_from_node(past_neighbor);
         pthread_mutex_unlock(&past_neighbor->shield_lock);
       }
+      printf("hoigois\n");
 
       pthread_mutex_lock(&me->shield_lock);
       me->shield = 0;
@@ -102,6 +109,7 @@ int build_shields(Node* me){
       pthread_mutex_unlock(&me->shield_lock);
 
       pthread_cond_wait(&neighbor->visit_list[find_position_in_array(me, neighbor)].cond, &neighbor->shield_lock);
+
       pthread_mutex_unlock(&neighbor->shield_lock);
 
       //do we need to add a return here? CHECK THIS LATER
